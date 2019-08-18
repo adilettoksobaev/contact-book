@@ -11,6 +11,10 @@ export default class App extends Component {
         search: "",
         alphabetSort: "",
     }
+
+    /**
+     * Get request to get all users and add to localstorage
+    */
     componentDidMount() {
         if(localStorage.getItem(`users`)) {
             this.setState({ users: JSON.parse(localStorage.getItem(`users`)) });
@@ -21,6 +25,10 @@ export default class App extends Component {
             });
         }
     };
+
+    /**
+     * Search form
+    */
 
     searchItems(users, search) {
         if (search.length === 0) {
@@ -34,6 +42,14 @@ export default class App extends Component {
         });
     };
 
+    onSearchChange = search => {
+        this.setState({ search });
+    };
+
+    /**
+     * Alphabet first letter sort
+    */
+
     sortItems(users, alphabetSort) {
         if (!alphabetSort || (alphabetSort && alphabetSort.length === 0)) {
           return users;
@@ -43,9 +59,16 @@ export default class App extends Component {
         });
     };
 
-    onSearchChange = search => {
-        this.setState({ search });
-    };
+    handleAlphabetSort = (alphabetSort) => {
+        if(alphabetSort === this.state.alphabetSort){
+            this.setState({ alphabetSort:""});
+        }else
+            this.setState({ alphabetSort });
+    }
+
+    /**
+     * Edit book list
+    */
 
     onEdit = (id, name, phone, username, email, website, address, streetA, posts) => {
         this.setState(state => {
@@ -66,13 +89,6 @@ export default class App extends Component {
             return { users: users };
         });
     };
-
-    handleAlphabetSort = (alphabetSort) => {
-        if(alphabetSort === this.state.alphabetSort){
-            this.setState({ alphabetSort:""});
-        }else
-            this.setState({ alphabetSort });
-    }
 
     render() {
         const { users, search,alphabetSort } = this.state;
